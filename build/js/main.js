@@ -1,7 +1,9 @@
 "use strict";
-let username = "granslik";
-console.log(username);
-let a = 12;
-let b = 6;
-let c = 2;
-console.log(a / b);
+let myName = "Mbiki";
+let address;
+address = 184;
+address = "204 Mayple street";
+const sum = (a, b) => {
+    return a + b;
+};
+console.log(sum(4, 3));

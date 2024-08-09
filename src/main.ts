@@ -1,8 +1,11 @@
-let username = "granslik"
-console.log(username)
+let myName = "Mbiki"
+let address: string | number
+address = 184
+address = "204 Mayple street"
 
-let a = 12
-let b = 6
-let c = 2
+const sum = (a:number ,b:number) => {
+    return a+b
+ }
+console.log(sum(4,3))
 
-console.log(a/b)
+
