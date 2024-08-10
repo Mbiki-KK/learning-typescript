@@ -1,21 +1,5 @@
 "use strict";
-// type One = string
-// type Two = string | number
-// type Three = "Hello"
-// let a:One = "Hello"
-// let b = a as Two
-// const isNumber = (value: any): boolean => {
-//     return typeof value === 'number' ? true : false
-// }
-// console.log(isNumber(67))
-const isAsc = (...arr) => {
-    for (let i = 0; i < arr.length - 1; i++) // loops through each element of the array
-     {
-        if (arr[i] > arr[i + 1]) {
-            return false;
-        }
-        // checks if the current element of the array is greater than the next element and returns false if the condition is satisfied
-    }
-    return true;
+const orderedCount = (text) => {
+    return Array.from(new Set(text)).map(c => { var _a; return [c, (_a = text.match(new RegExp(c, 'g'))) === null || _a === void 0 ? void 0 : _a.length]; });
 };
-console.log(isAsc(1, 2, 3));
+console.log(orderedCount("Hello"));
