@@ -1,78 +1,29 @@
-// Type Aliases
-type booleanOrString = (boolean | string)
+// type One = string
+// type Two = string | number
+// type Three = "Hello"
 
-type Lawyer = {
-    name?: string,
-    active: booleanOrString ,
-    casesDone: number
-}
-
-// Literal Types
-let username: "Granslik"
-
-// username = Miquella -- doesn't work
+// let a:One = "Hello"
+// let b = a as Two
 
 
 
-// functions
-const add = (a: number,b: number): number => {
-    return a+b
-}
+// const isNumber = (value: any): boolean => {
+//     return typeof value === 'number' ? true : false
+// }
 
-const logMessage = (messange:any): void => {
-    console.log(messange)
-}
-logMessage("Hello there")
-logMessage(add(2,3))
-logMessage("Hello there")
+// console.log(isNumber(67))
 
-type mathFunction = (a:number, b:number) => number
+const isAsc = (...arr:number[]) => {
 
-// interface mathFunction {(a: number, b:number): number}
-
-// For sake of habit, use type for type literals and interface for class definition
-
-
-let subtract: mathFunction = function (c,d) {
-    return c-d
-}
-logMessage(subtract(2,3))
-
-let multiply: mathFunction = function (f,g) {
-    return f * g
-}
-
-logMessage(multiply(4,6))
-
-// Optional parameters
-
-const addAll = (a: number, b:number, c?:number): number => {
-    // typeguard - avoids error of possibly undefined
-    if (typeof c !== 'undefined') {
-        return a+b+c
+    for (let i = 0; i<arr.length -1;i++) // loops through each element of the array
+    {
+        if (arr[i] > arr[i+1]) {
+            return false
+        }
+// checks if the current element of the array is greater than the next element and returns false if the condition is satisfied
     }
-    return a+b
-}
-// default param value
-const sumAll = (a: number, b:number, c:number = 2): number => {
-
-    return a+b+c
+    return true
 }
 
-
-logMessage(addAll(2,3,4))
-logMessage(addAll(2,3))
-logMessage(sumAll(2,3))
-
-// Rest parameters
-
-const total = (...nums: number[]):number => {
-    return nums.reduce((prev, curr) => prev + curr)
-}
-
-logMessage(total(1,2,3,4))
-
-const createError = (errMsg: string) => {
-    throw new Error(errMsg)
-}
+console.log(isAsc(1,2,3))
 
