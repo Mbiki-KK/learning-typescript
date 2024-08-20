@@ -1,128 +1,99 @@
-class Coder {
+// index signatures
 
-    constructor(
-        public readonly name: string,
-        public music:string,
-        private age: number,
-        protected lang: string = 'Typescript') {
-        this.name = name
-        this.music = music
-        this.age = age
-        this.lang = lang
-    }
+// interface TransactionObj {
+//     readonly [index: string]: number
+// }
 
-    public getAge () {
-        return `Hello, I'm ${this.age}`
-    }
+interface TransactionObj {
+    readonly [index: string]: number
+    Pizza: number,
+    Books: number,
+    Job: number
 }
 
-const Mbiki = new Coder('Mbiki','Pop', 19,)
-console.log(Mbiki.getAge())
-// console.log(Mbiki.age)
-// console.log(Mbiki.lang)
-
-
-
-// Data modifiers/ Visibility modifiers/members
-// public
-// private - strictly for use in the class defined and nowhere else
-// protected - can be accessed in subclasses. (Property 'lang' is protected and only accessible within class 'Coder' and its subclasses)
-
-class WebDev extends Coder {
-    constructor(
-        public computer: string,
-        name: string,
-        music: string,
-        age:number,
-     ) {
-        super(name, music, age)
-        this.computer = computer
-    }
-
-    public getLang() {
-        return `I write ${this.lang}`
-    }
+const todaysTransactions: TransactionObj = {
+    Pizza: -10,
+    Books: -5,
+    Job: 50
+    // Dave: 42
 }
 
-const Sara = new WebDev("Hp", 'Sara', 'Hip hop', 23)
-console.log(Sara.getLang())
+console.log(todaysTransactions.Pizza)
+console.log(todaysTransactions['Pizza'])
 
-//////////////////////////////////////////////////////////////////
+let prop: string = 'Pizza'
 
-interface Musician {
-    name: string
-    instrument: string
-    play(action: string): string
+console.log(todaysTransactions[prop])
+
+const todaysNet = (transactions: TransactionObj): number => {
+    let total = 0
+    for (const transaction in transactions) {
+        total+= transactions[transaction]
+    }
+    return total
 }
 
-class Guitarist implements Musician {
-    name: string
-    instrument: string
+console.log(todaysNet(todaysTransactions))
 
-    constructor(name: string, instrument: string) {
-        this.name = name
-        this.instrument = instrument
-    }
+// todaysTransactions.Pizza = 40
 
-    play(action: string) {
-        return `${this.name} ${action} the ${this.instrument}`
-    }
+console.log(todaysTransactions['Dave'])
+
+//////////////////////////////////////////////////////
+
+
+interface Student {
+    // [key: string]: string | number | number[] | undefined
+    name: string,
+    GPA: number,
+    classes?: number[]
 }
 
-const Paige = new Guitarist('Jimmy', 'guitar')
-console.log(Paige.play('strums'))
-
-/////////////////////////////////////////////////////////////////////
-
-class Peeps {
-    static count: number = 0
-
-    static getCount(): number {
-        return Peeps.count
-    }
-
-    public id: number
-
-    constructor(public name: string) {
-        this.name = name
-        this.id = ++Peeps.count // ++ is in front to ensure the first id is 1 not 0
-    }
+const student: Student = {
+    name: "Doug",
+    GPA: 3.5,
+    classes: [100,200]
 }
 
-const John = new Peeps("John")
-const Steve = new Peeps("Steve")
-const Amy = new Peeps("Amy")
+// console.log(student.test)
 
-console.log(John.id)
-console.log(Amy.id)
-console.log(Steve.id)
-console.log(Peeps.count)
-
-//////////////////////////////////////////////////////////////////
-
-class Bands {
-    private dataState: string[]
-
-    constructor() {
-        this.dataState = []
+for (const key in student) {
+    console.log(`${key}: ${student[key as keyof Student]}`)
     }
 
-    public get data(): string[] {
-        return this.dataState
-    }
+// keyof creates a union type that is the specific string literal
 
-    public set data(value: string[]) {
-        if (Array.isArray(value) && value.every(el => typeof el === 'string'))
-            {
-                this.dataState = value
-                return // setters do not have return values
-        } else throw new Error("Params is not an array of strings")
-    }
+
+Object.keys(student).map(key => {
+    console.log(student[key as keyof typeof student])
+})
+
+
+const logStudentKey = (student: Student, key: keyof Student): void => {
+    console.log(`Student ${key}: ${student[key]}`)
 }
 
-const MyBands = new Bands()
-MyBands.data = ['Neil Young', 'Led Zep']
-console.log(MyBands.data)
-MyBands.data = [...MyBands.data, 'ZZ Top']
-console.log(MyBands.data)
-// MyBands.data = ["Van Halen", 5150] -- doesn't work
+logStudentKey(student, "name")
+
+////////////////////////////////////////////////////
+
+// interface Incomes {
+//     [key: string]: number
+// }
+
+type Streams = 'salary' | 'bonus' | 'sidehustle'
+
+type Incomes = Record<Streams, number>
+
+const monthlyIncomes: Incomes = {
+    salary: 500,
+    bonus: 100,
+    sidehustle: 250
+}
+
+
+for (const revenue in monthlyIncomes) {
+    console.log(monthlyIncomes[revenue as keyof Incomes])
+
+}
+
