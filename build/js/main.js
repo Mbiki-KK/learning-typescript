@@ -1,47 +1,50 @@
 "use strict";
-// index signatures
-const todaysTransactions = {
-    Pizza: -10,
-    Books: -5,
-    Job: 50
-    // Dave: 42
+////////// Generics
+const echo = (arg) => arg;
+const isObj = (arg) => {
+    return (typeof arg === 'object' && !Array.isArray(arg) && arg !== null);
 };
-console.log(todaysTransactions.Pizza);
-console.log(todaysTransactions['Pizza']);
-let prop = 'Pizza';
-console.log(todaysTransactions[prop]);
-const todaysNet = (transactions) => {
-    let total = 0;
-    for (const transaction in transactions) {
-        total += transactions[transaction];
+// console.log(isObj({name: 'John'}))
+const isTrue = (arg) => {
+    if (Array.isArray(arg) && !arg.length) {
+        return { arg, is: false };
     }
-    return total;
+    if (isObj(arg) && !Object.keys(arg).length) {
+        return { arg, is: false };
+    }
+    return { arg, is: !!arg };
 };
-console.log(todaysNet(todaysTransactions));
-// todaysTransactions.Pizza = 40
-console.log(todaysTransactions['Dave']);
-const student = {
-    name: "Doug",
-    GPA: 3.5,
-    classes: [100, 200]
+const checkBoolValue = (arg) => {
+    if (Array.isArray(arg) && !arg.length) {
+        return { value: arg, is: false };
+    }
+    if (isObj(arg) && !Object.keys(arg).length) {
+        return { value: arg, is: false };
+    }
+    return { value: arg, is: !!arg };
 };
-// console.log(student.test)
-for (const key in student) {
-    console.log(`${key}: ${student[key]}`);
+const processUser = (user) => {
+    return user;
+};
+console.log(processUser({ id: 1, name: 'Mbiki' }));
+const getUsersProp = (users, key) => {
+    return users.map(user => user[key]);
+};
+class StateObj {
+    constructor(value) {
+        this.data = value;
+    }
+    get state() {
+        return this.data;
+    }
+    set state(value) {
+        this.data = value;
+    }
 }
-// keyof creates a union type that is the specific string literal
-Object.keys(student).map(key => {
-    console.log(student[key]);
-});
-const logStudentKey = (student, key) => {
-    console.log(`Student ${key}: ${student[key]}`);
-};
-logStudentKey(student, "name");
-const monthlyIncomes = {
-    salary: 500,
-    bonus: 100,
-    sidehustle: 250
-};
-for (const revenue in monthlyIncomes) {
-    console.log(monthlyIncomes[revenue]);
-}
+const store = new StateObj("John");
+console.log(store.state);
+store.state = "Mbiki";
+// store.state = 12
+const myState = new StateObj([15]);
+myState.state = ['Mbiki', 12, true];
+console.log(myState.state);
